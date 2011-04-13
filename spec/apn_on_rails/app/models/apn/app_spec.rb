@@ -70,7 +70,7 @@ describe APN::App do
       app = AppFactory.create
       device = DeviceFactory.create({:app_id => app.id})
       group =   GroupFactory.create({:app_id => app.id})
-      device_grouping = DeviceGroupingFactory.create({:group_id => group.id,:device_id => device.id})
+      group.devices << device
       gnotys = [GroupNotificationFactory.create({:group_id => group.id}), 
                 GroupNotificationFactory.create({:group_id => group.id})]
       gnotys.each_with_index do |gnoty, i|
@@ -100,7 +100,7 @@ describe APN::App do
       app = AppFactory.create
       device = DeviceFactory.create({:app_id => app.id})
       group =   GroupFactory.create({:app_id => app.id})
-      device_grouping = DeviceGroupingFactory.create({:group_id => group.id,:device_id => device.id})
+      group.devices << device
       gnoty = GroupNotificationFactory.create({:group_id => group.id})
       gnoty.stub!(:message_for_sending).and_return("message-0")
       gnoty.should_receive(:sent_at=).with(instance_of(Time))
@@ -149,7 +149,7 @@ describe APN::App do
       app = AppFactory.create
       device = DeviceFactory.create({:app_id => app.id})
       group =   GroupFactory.create({:app_id => app.id})
-      device_grouping = DeviceGroupingFactory.create({:group_id => group.id,:device_id => device.id})
+      group.devices << device
       gnoty = GroupNotificationFactory.create({:group_id => group.id})
       app.should_receive(:cert).and_return(nil)
       lambda { 

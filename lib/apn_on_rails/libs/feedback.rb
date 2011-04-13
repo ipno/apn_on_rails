@@ -17,7 +17,7 @@ module APN
           while line = conn.read(38)   # Read 38 bytes from the SSL socket
             feedback = line.unpack('N1n1H140')            
             token = feedback[2].scan(/.{0,8}/).join(' ').strip
-            device = APN::Device.find(:first, :conditions => {:token => token})
+            device = APN::Device.where(:token => token).first
             if device
               device.feedback_at = Time.at(feedback[0])
               devices << device

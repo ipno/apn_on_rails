@@ -1,28 +1,29 @@
-class APN::PullNotification < APN::Base
+class APN::PullNotification
+  include MongoMapper::Document
+
+  key :app_id, BSON::ObjectId, :required => true
+  key :title, String
+  key :content, String
+  key :link, String
+  key :launch_notification, Boolean
+  timestamps!
+
   belongs_to :app, :class_name => 'APN::App'
   
-  validates_presence_of :app_id
-
   def self.latest_since(app_id, since_date=nil)
+    scope = where(:app_id => app_id).sort('created_at desc')
     if since_date
-      res = first(:order => "created_at DESC", 
-                  :conditions => ["app_id = ? AND created_at > ? AND launch_notification = ?", app_id, since_date, false])
+      res = scope.where(:created_at.gt => since_date, :launch_notification => false).first
     else
-      res = first(:order => "created_at DESC", 
-                  :conditions => ["app_id = ? AND launch_notification = ?", app_id, true])
-      res = first(:order => "created_at DESC", 
-                  :conditions => ["app_id = ? AND launch_notification = ?", app_id, false]) unless res
+      res = scope.where(:launch_notification => true).first
+      res = scope.where(:launch_notification => false).first unless res
     end
     res
   end
   
   def self.all_since(app_id, since_date=nil)
-    if since_date
-      res = all(:order => "created_at DESC", 
-                :conditions => ["app_id = ? AND created_at > ? AND launch_notification = ?", app_id, since_date, false])
-    else 
-      res = all(:order => "created_at DESC", 
-                :conditions => ["app_id = ? AND launch_notification = ?", app_id, false])
-    end
+    scope = where(:app_id => app_id, :launch_notification => false).sort('created_at desc')
+    scope = scope.where(:created_at.gt => since_date) if since_date
+    scope.all
   end
 end

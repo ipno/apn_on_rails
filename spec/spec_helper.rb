@@ -5,7 +5,7 @@ Dir.glob(File.join(File.dirname(__FILE__), 'extensions', '*.rb')).sort.each do |
   require f
 end
 
-require File.join(File.dirname(__FILE__), 'active_record', 'setup_ar.rb')
+require File.join(File.dirname(__FILE__), 'mongo_mapper', 'setup_mongo_mapper.rb')
 
 require File.join(File.dirname(__FILE__), '..', 'lib', 'apn_on_rails')
 
@@ -18,7 +18,9 @@ configatron.apn.cert = File.expand_path(File.join(File.dirname(__FILE__), 'rails
 RSpec.configure do |config|
   
   config.before(:all) do
-    
+    MongoMapper.database.collections.each do |coll|
+      coll.remove
+    end
   end
   
   config.after(:all) do
@@ -40,7 +42,7 @@ def fixture_path(*name)
 end
 
 def fixture_value(*name)
-  return File.read(fixture_path(*name))
+  return File.open(fixture_path(*name), 'rb') {|file| file.read}
 end
 
 def write_fixture(name, value)

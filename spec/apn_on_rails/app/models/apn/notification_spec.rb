@@ -15,6 +15,9 @@ describe APN::Notification do
   describe 'apple_hash' do
     
     it 'should return a hash of the appropriate params for Apple' do
+      app = AppFactory.create
+      device = DeviceFactory.create({:app_id => app.id})
+      notifications = [NotificationFactory.create({:device_id => device.id})]
       noty = APN::Notification.first
       noty.apple_hash.should == {"aps" => {"badge" => 5, "sound" => "my_sound.aiff", "alert" => "Hello!"},"typ" => "1"}
       noty.custom_properties = nil
@@ -35,7 +38,7 @@ describe APN::Notification do
     
     it 'should return the necessary JSON for Apple' do
       noty = APN::Notification.first
-      noty.to_apple_json.should == %{{"typ":"1","aps":{"badge":5,"sound":"my_sound.aiff","alert":"Hello!"}}}
+      noty.to_apple_json.should == %{{"aps":{"alert":"Hello!","badge":5,"sound":"my_sound.aiff"},"typ":"1"}}
     end
     
   end
@@ -46,11 +49,11 @@ describe APN::Notification do
       noty = APN::Notification.first
       noty.custom_properties = nil
       noty.device = DeviceFactory.new(:token => '5gxadhy6 6zmtxfl6 5zpbcxmw ez3w7ksf qscpr55t trknkzap 7yyt45sc g6jrw7qz')
-      noty.message_for_sending.should == fixture_value('message_for_sending.bin')
+      noty.message_for_sending.should == fixture_value('message_for_sending.bin').strip
     end
     
     it 'should raise an APN::Errors::ExceededMessageSizeError if the message is too big' do
-      noty = NotificationFactory.new(:device_id => DeviceFactory.create, :sound => true, :badge => nil)
+      noty = NotificationFactory.new(:device => DeviceFactory.create, :sound => true, :badge => nil)
       noty.send(:write_attribute, 'alert', 'a' * 183)
       lambda {
         noty.message_for_sending

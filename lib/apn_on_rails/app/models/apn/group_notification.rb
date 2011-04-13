@@ -1,13 +1,18 @@
-class APN::GroupNotification < APN::Base
+class APN::GroupNotification
+  include MongoMapper::Document
   include ::ActionView::Helpers::TextHelper
   extend ::ActionView::Helpers::TextHelper
-  serialize :custom_properties
+
+  key :group_id, BSON::ObjectId, :index => true, :required => true
+  key :device_language, String
+  key :sound, String
+  key :alert, String
+  key :badge, Integer
+  key :custom_properties, Hash
+  key :sent_at, Time, :index => true
+  timestamps!
   
   belongs_to :group, :class_name => 'APN::Group'
-  has_one    :app, :class_name => 'APN::App', :through => :group
-  has_many   :device_groupings, :through => :group
-  
-  validates_presence_of :group_id
   
   def devices
     self.group.devices
@@ -46,7 +51,7 @@ class APN::GroupNotification < APN::Base
     result['aps']['badge'] = self.badge.to_i if self.badge
     if self.sound
       result['aps']['sound'] = self.sound if self.sound.is_a? String
-      result['aps']['sound'] = "1.aiff" if self.sound.is_a?(TrueClass)
+      result['aps']['sound'] = "1.aiff" if self.sound == 'true'
     end
     if self.custom_properties
       self.custom_properties.each do |key,value|

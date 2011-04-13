@@ -8,11 +8,15 @@
 # 
 # Example:
 #   Device.create(:token => '5gxadhy6 6zmtxfl6 5zpbcxmw ez3w7ksf qscpr55t trknkzap 7yyt45sc g6jrw7qz')
-class APN::Device < APN::Base
+class APN::Device
+  include MongoMapper::Document
+
+  key :last_registered_at, Time
+  key :token, String, :required => true, :index => true
+  key :app_id, BSON::ObjectId
   
   belongs_to :app, :class_name => 'APN::App'
-  has_many :notifications, :class_name => 'APN::Notification'
-  has_many :unsent_notifications, :class_name => 'APN::Notification', :conditions => 'sent_at is null'
+  many :notifications, :class_name => 'APN::Notification'
   
   validates_uniqueness_of :token, :scope => :app_id
   validates_format_of :token, :with => /^[a-z0-9]{8}\s[a-z0-9]{8}\s[a-z0-9]{8}\s[a-z0-9]{8}\s[a-z0-9]{8}\s[a-z0-9]{8}\s[a-z0-9]{8}\s[a-z0-9]{8}$/
@@ -23,6 +27,10 @@ class APN::Device < APN::Base
   # device is marked as potentially disconnected from your
   # application by Apple.
   attr_accessor :feedback_at
+
+  def unsent_notifications
+    notifications.where(:sent_at => nil).all
+  end
   
   # Stores the token (Apple's device ID) of the iPhone (device).
   # 

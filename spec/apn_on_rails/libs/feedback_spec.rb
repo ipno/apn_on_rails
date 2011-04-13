@@ -5,6 +5,7 @@ describe APN::Feedback do
   describe 'devices' do
     
     before(:each) do
+      AppFactory.create unless APN::App.exists?
       @time = Time.now
       @device = DeviceFactory.create
       @cert = mock('cert_mock')

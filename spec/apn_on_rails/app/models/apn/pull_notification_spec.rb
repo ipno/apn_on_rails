@@ -5,8 +5,8 @@ describe APN::PullNotification do
   describe 'latest_since_when_already_seen_latest' do
     
     it 'should return nothing because since date is after the latest pull notification' do
-      app = APN::App.first
-      noty1 = PullNotificationFactory.create({:app_id => app.id})
+      app = AppFactory.create
+      noty1 = PullNotificationFactory.create({:app => app})
       noty1.created_at = Time.now - 1.week
       noty1.save
       APN::PullNotification.latest_since(app.id,Time.now).should == nil      
@@ -18,7 +18,7 @@ describe APN::PullNotification do
     
     it 'should return the most recent pull notification because it has not yet been seen' do 
       app = APN::App.first
-      noty1 = PullNotificationFactory.create({:app_id => app.id})
+      noty1 = PullNotificationFactory.create({:app => app})
       noty1.created_at = Time.now + 1.week
       noty1.save
       latest = APN::PullNotification.latest_since(app.id,Time.now - 1.week)
@@ -31,7 +31,7 @@ describe APN::PullNotification do
   describe 'latest_since_with_no_date_when_there_is_no_launch_notification' do 
     it 'should return the most recent pull notification because no date is given' do 
       app = APN::App.first
-      noty1 = APN::PullNotification.find(:first, :order => "created_at DESC")
+      noty1 = APN::PullNotification.sort('created_at desc').first
       APN::PullNotification.latest_since(app.id).should == noty1
     end
   end
@@ -39,10 +39,10 @@ describe APN::PullNotification do
   describe 'latest_since_with_no_date_when_there_is_a_launch_notification' do
     it 'should return the launch notification even though there is a more recent notification' do
       app = APN::App.first
-      noty_launch = PullNotificationFactory.create({:app_id => app.id, :launch_notification => true})
+      noty_launch = PullNotificationFactory.create({:app => app, :launch_notification => true})
       noty_launch.created_at = Time.now - 1.week
       noty_launch.save
-      noty_nonlaunch = PullNotificationFactory.create({:app_id => app.id})
+      noty_nonlaunch = PullNotificationFactory.create({:app => app})
       APN::PullNotification.latest_since(app.id).should == noty_launch
     end
   end

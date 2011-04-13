@@ -14,14 +14,23 @@
 # 
 # As each APN::Notification is sent the <tt>sent_at</tt> column will be timestamped,
 # so as to not be sent again.
-class APN::Notification < APN::Base
+class APN::Notification
+  include MongoMapper::Document
   include ::ActionView::Helpers::TextHelper
   extend ::ActionView::Helpers::TextHelper
-  serialize :custom_properties
+
+  key :device_id, BSON::ObjectId, :required => true
+  key :errors_nb, Integer, :default => 0
+  key :device_language, String
+  key :sound, String
+  key :alert, String
+  key :badge, Integer
+  key :custom_properties, Hash
+  key :sent_at, Time, :index => true
+  timestamps!
   
   belongs_to :device, :class_name => 'APN::Device'
-  has_one    :app,    :class_name => 'APN::App', :through => :device
-  
+
   # Stores the text alert message you want to send to the device.
   # 
   # If the message is over 150 characters long it will get truncated
@@ -55,7 +64,7 @@ class APN::Notification < APN::Base
     result['aps']['badge'] = self.badge.to_i if self.badge
     if self.sound
       result['aps']['sound'] = self.sound if self.sound.is_a? String
-      result['aps']['sound'] = "1.aiff" if self.sound.is_a?(TrueClass)
+      result['aps']['sound'] = "1.aiff" if self.sound == 'true'
     end
     if self.custom_properties
       self.custom_properties.each do |key,value|
