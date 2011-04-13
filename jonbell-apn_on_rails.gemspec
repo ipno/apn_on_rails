@@ -4,16 +4,16 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{apn_on_rails}
+  s.name = %q{jonbell-apn_on_rails}
   s.version = "0.4.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["markbates", "Rebecca Nesson"]
-  s.date = %q{2011-01-04}
+  s.authors = ["markbates", "Rebecca Nesson", "Jonathan Bell"]
+  s.date = %q{2011-04-13}
   s.description = %q{APN on Rails is a Ruby on Rails gem that allows you to
-easily add Apple Push Notification (iPhone) support to your Rails application.
+easily add Apple Push Notification (iPhone) support to your Rails application using MongoMapper.
 }
-  s.email = %q{tech-team@prx.org}
+  s.email = %q{jbell@moxiesoft.com}
   s.extra_rdoc_files = [
     "LICENSE",
     "README",
@@ -47,7 +47,6 @@ easily add Apple Push Notification (iPhone) support to your Rails application.
     "lib/apn_on_rails.rb",
     "lib/apn_on_rails/apn_on_rails.rb",
     "lib/apn_on_rails/app/models/apn/app.rb",
-    "lib/apn_on_rails/app/models/apn/base.rb",
     "lib/apn_on_rails/app/models/apn/device.rb",
     "lib/apn_on_rails/app/models/apn/device_grouping.rb",
     "lib/apn_on_rails/app/models/apn/group.rb",
@@ -59,7 +58,6 @@ easily add Apple Push Notification (iPhone) support to your Rails application.
     "lib/apn_on_rails/tasks/apn.rake",
     "lib/apn_on_rails/tasks/db.rake",
     "lib/apn_on_rails_tasks.rb",
-    "spec/active_record/setup_ar.rb",
     "spec/apn_on_rails/app/models/apn/app_spec.rb",
     "spec/apn_on_rails/app/models/apn/device_spec.rb",
     "spec/apn_on_rails/app/models/apn/group_notification_spec.rb",
@@ -70,22 +68,21 @@ easily add Apple Push Notification (iPhone) support to your Rails application.
     "spec/extensions/string.rb",
     "spec/factories/app_factory.rb",
     "spec/factories/device_factory.rb",
-    "spec/factories/device_grouping_factory.rb",
     "spec/factories/group_factory.rb",
     "spec/factories/group_notification_factory.rb",
     "spec/factories/notification_factory.rb",
     "spec/factories/pull_notification_factory.rb",
     "spec/fixtures/hexa.bin",
     "spec/fixtures/message_for_sending.bin",
+    "spec/mongo_mapper/setup_mongo_mapper.rb",
     "spec/rails_root/config/apple_push_notification_development.pem",
     "spec/spec_helper.rb"
   ]
-  s.homepage = %q{http://github.com/PRX/apn_on_rails}
+  s.homepage = %q{http://github.com/jonbell/apn_on_rails}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Apple Push Notifications on Rails}
+  s.summary = %q{Apple Push Notifications on Rails for MongoMapper}
   s.test_files = [
-    "spec/active_record/setup_ar.rb",
     "spec/apn_on_rails/app/models/apn/app_spec.rb",
     "spec/apn_on_rails/app/models/apn/device_spec.rb",
     "spec/apn_on_rails/app/models/apn/group_notification_spec.rb",
@@ -96,11 +93,11 @@ easily add Apple Push Notification (iPhone) support to your Rails application.
     "spec/extensions/string.rb",
     "spec/factories/app_factory.rb",
     "spec/factories/device_factory.rb",
-    "spec/factories/device_grouping_factory.rb",
     "spec/factories/group_factory.rb",
     "spec/factories/group_notification_factory.rb",
     "spec/factories/notification_factory.rb",
     "spec/factories/pull_notification_factory.rb",
+    "spec/mongo_mapper/setup_mongo_mapper.rb",
     "spec/spec_helper.rb"
   ]
 
@@ -111,34 +108,40 @@ easily add Apple Push Notification (iPhone) support to your Rails application.
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<configatron>, [">= 0"])
       s.add_development_dependency(%q<autotest>, [">= 0"])
-      s.add_development_dependency(%q<sqlite3-ruby>, [">= 0"])
+      s.add_development_dependency(%q<mongo>, ["= 1.2.0"])
+      s.add_development_dependency(%q<bson>, ["= 1.2.0"])
+      s.add_development_dependency(%q<bson_ext>, ["= 1.2.0"])
+      s.add_development_dependency(%q<ssherman-mongo_mapper>, ["= 0.8.6"])
       s.add_development_dependency(%q<rspec>, [">= 2.0.0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.0"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<actionpack>, ["~> 2.3.0"])
-      s.add_development_dependency(%q<activerecord>, ["~> 2.3.0"])
     else
       s.add_dependency(%q<configatron>, [">= 0"])
       s.add_dependency(%q<autotest>, [">= 0"])
-      s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
+      s.add_dependency(%q<mongo>, ["= 1.2.0"])
+      s.add_dependency(%q<bson>, ["= 1.2.0"])
+      s.add_dependency(%q<bson_ext>, ["= 1.2.0"])
+      s.add_dependency(%q<ssherman-mongo_mapper>, ["= 0.8.6"])
       s.add_dependency(%q<rspec>, [">= 2.0.0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.0"])
       s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<actionpack>, ["~> 2.3.0"])
-      s.add_dependency(%q<activerecord>, ["~> 2.3.0"])
     end
   else
     s.add_dependency(%q<configatron>, [">= 0"])
     s.add_dependency(%q<autotest>, [">= 0"])
-    s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
+    s.add_dependency(%q<mongo>, ["= 1.2.0"])
+    s.add_dependency(%q<bson>, ["= 1.2.0"])
+    s.add_dependency(%q<bson_ext>, ["= 1.2.0"])
+    s.add_dependency(%q<ssherman-mongo_mapper>, ["= 0.8.6"])
     s.add_dependency(%q<rspec>, [">= 2.0.0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.0"])
     s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<actionpack>, ["~> 2.3.0"])
-    s.add_dependency(%q<activerecord>, ["~> 2.3.0"])
   end
 end
 

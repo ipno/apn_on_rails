@@ -12,16 +12,16 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "apn_on_rails"
-  gem.summary = %Q{Apple Push Notifications on Rails}
+  gem.name = "jonbell-apn_on_rails"
+  gem.summary = %Q{Apple Push Notifications on Rails for MongoMapper}
   
   gem.description = %Q{APN on Rails is a Ruby on Rails gem that allows you to
-easily add Apple Push Notification (iPhone) support to your Rails application.
+easily add Apple Push Notification (iPhone) support to your Rails application using MongoMapper.
 }
 
-  gem.email = "tech-team@prx.org"
-  gem.homepage = "http://github.com/PRX/apn_on_rails"
-  gem.authors = ["markbates", "Rebecca Nesson"]
+  gem.email = "jbell@moxiesoft.com"
+  gem.homepage = "http://github.com/jonbell/apn_on_rails"
+  gem.authors = ["markbates", "Rebecca Nesson", "Jonathan Bell"]
 end
 #Jeweler::RubygemsDotOrgsTasks.new
 
