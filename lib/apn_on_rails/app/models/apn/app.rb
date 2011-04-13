@@ -6,10 +6,6 @@ class APN::App
   
   many :groups, :class_name => 'APN::Group', :dependent => :destroy
   many :devices, :class_name => 'APN::Device', :dependent => :destroy
-  #many :notifications, :through => :devices, :dependent => :destroy
-  #many :unsent_notifications, :through => :devices
-  #many :group_notifications, :through => :groups
-  #many :unsent_group_notifications, :through => :groups
     
   def cert
     (RAILS_ENV == 'production' ? apn_prod_cert : apn_dev_cert)
