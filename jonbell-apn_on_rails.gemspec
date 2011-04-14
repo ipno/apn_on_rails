@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{jonbell-apn_on_rails}
-  s.version = "0.4.3"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["markbates", "Rebecca Nesson", "Jonathan Bell"]
-  s.date = %q{2011-04-13}
+  s.date = %q{2011-04-14}
   s.description = %q{APN on Rails is a Ruby on Rails gem that allows you to
 easily add Apple Push Notification (iPhone) support to your Rails application using MongoMapper.
 }
@@ -108,40 +108,40 @@ easily add Apple Push Notification (iPhone) support to your Rails application us
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<configatron>, [">= 0"])
       s.add_development_dependency(%q<autotest>, [">= 0"])
-      s.add_development_dependency(%q<mongo>, ["= 1.2.0"])
-      s.add_development_dependency(%q<bson>, ["= 1.2.0"])
-      s.add_development_dependency(%q<bson_ext>, ["= 1.2.0"])
-      s.add_development_dependency(%q<ssherman-mongo_mapper>, ["= 0.8.6"])
+      s.add_development_dependency(%q<mongo>, ["= 1.3.0"])
+      s.add_development_dependency(%q<bson>, ["= 1.3.0"])
+      s.add_development_dependency(%q<bson_ext>, ["= 1.3.0"])
+      s.add_development_dependency(%q<mongo_mapper>, ["= 0.9.0"])
       s.add_development_dependency(%q<rspec>, [">= 2.0.0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.0"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
-      s.add_development_dependency(%q<actionpack>, ["~> 2.3.0"])
+      s.add_development_dependency(%q<actionpack>, ["~> 3.0.6"])
     else
       s.add_dependency(%q<configatron>, [">= 0"])
       s.add_dependency(%q<autotest>, [">= 0"])
-      s.add_dependency(%q<mongo>, ["= 1.2.0"])
-      s.add_dependency(%q<bson>, ["= 1.2.0"])
-      s.add_dependency(%q<bson_ext>, ["= 1.2.0"])
-      s.add_dependency(%q<ssherman-mongo_mapper>, ["= 0.8.6"])
+      s.add_dependency(%q<mongo>, ["= 1.3.0"])
+      s.add_dependency(%q<bson>, ["= 1.3.0"])
+      s.add_dependency(%q<bson_ext>, ["= 1.3.0"])
+      s.add_dependency(%q<mongo_mapper>, ["= 0.9.0"])
       s.add_dependency(%q<rspec>, [">= 2.0.0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.0"])
       s.add_dependency(%q<rcov>, [">= 0"])
-      s.add_dependency(%q<actionpack>, ["~> 2.3.0"])
+      s.add_dependency(%q<actionpack>, ["~> 3.0.6"])
     end
   else
     s.add_dependency(%q<configatron>, [">= 0"])
     s.add_dependency(%q<autotest>, [">= 0"])
-    s.add_dependency(%q<mongo>, ["= 1.2.0"])
-    s.add_dependency(%q<bson>, ["= 1.2.0"])
-    s.add_dependency(%q<bson_ext>, ["= 1.2.0"])
-    s.add_dependency(%q<ssherman-mongo_mapper>, ["= 0.8.6"])
+    s.add_dependency(%q<mongo>, ["= 1.3.0"])
+    s.add_dependency(%q<bson>, ["= 1.3.0"])
+    s.add_dependency(%q<bson_ext>, ["= 1.3.0"])
+    s.add_dependency(%q<mongo_mapper>, ["= 0.9.0"])
     s.add_dependency(%q<rspec>, [">= 2.0.0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.0"])
     s.add_dependency(%q<rcov>, [">= 0"])
-    s.add_dependency(%q<actionpack>, ["~> 2.3.0"])
+    s.add_dependency(%q<actionpack>, ["~> 3.0.6"])
   end
 end
 
