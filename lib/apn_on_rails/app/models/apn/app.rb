@@ -1,7 +1,7 @@
 class APN::App
   include MongoMapper::Document
-  key :app_dev_cert, String
-  key :app_prod_cert, String
+  key :apn_dev_cert, String
+  key :apn_prod_cert, String
   timestamps!
   
   many :groups, :class_name => 'APN::Group', :dependent => :destroy
