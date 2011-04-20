@@ -145,10 +145,13 @@ class APN::App
     groups.inject([]) {|notifications, group| notifications.concat(group.unsent_group_notifications)}
   end
   
+  def self.log_connection_exception(ex)
+    Rails.logger.error ex.message
+  end
   
   protected
   def log_connection_exception(ex)
-    puts ex.message
+    Rails.logger.error ex.message
   end
     
 end
