@@ -131,13 +131,13 @@ class APN::App < APN::Base
   end
 
   def self.process_devices_for_cert(the_cert)
-    puts "in APN::App.process_devices_for_cert"
+    Rails.logger.info "in APN::App.process_devices_for_cert"
     APN::Feedback.devices(the_cert).each do |device|
       if device.last_registered_at < device.feedback_at
-        puts "device #{device.id} -> #{device.last_registered_at} < #{device.feedback_at}"
+        Rails.logger.info "device #{device.id} -> #{device.last_registered_at} < #{device.feedback_at}"
         device.destroy
       else
-        puts "device #{device.id} -> #{device.last_registered_at} not < #{device.feedback_at}"
+        Rails.logger.info "device #{device.id} -> #{device.last_registered_at} not < #{device.feedback_at}"
       end
     end
   end
