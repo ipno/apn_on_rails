@@ -5,7 +5,7 @@ module DeviceGroupingFactory
     def new(options = {})
       device = APN::Device.first
       group  = APN::Group.first
-      options = {:device_id => device.id, :group_id => group.id}.merge(options)
+      options = {:device_id => device ? device.id : nil, :group_id => group ? group.id : nil}.merge(options)
       return APN::DeviceGrouping.new(options)
     end
     

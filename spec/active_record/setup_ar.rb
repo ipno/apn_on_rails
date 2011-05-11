@@ -1,9 +1,9 @@
 require 'rubygems'
 require 'active_record'
-
-logger = Logger.new(STDOUT)
-logger.level = Logger::INFO
-ActiveRecord::Base.logger = logger
+require 'fileutils'
+#logger = Logger.new(STDOUT)
+#logger.level = Logger::INFO
+#ActiveRecord::Base.logger = logger
 
 db_file = File.join(File.dirname(__FILE__), 'test.db')
 FileUtils.rm(db_file) if File.exists?(db_file)
