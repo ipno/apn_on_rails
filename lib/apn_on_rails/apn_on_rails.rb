@@ -3,13 +3,13 @@ require 'openssl'
 require 'configatron'
 
 rails_root = File.join(FileUtils.pwd, 'rails_root')
-if defined?(RAILS_ROOT)
-  rails_root = RAILS_ROOT
+if defined?(Rails.root)
+  rails_root = Rails.root.to_s
 end
 
 rails_env = 'development'
-if defined?(RAILS_ENV)
-  rails_env = RAILS_ENV
+if defined?(Rails.env)
+  rails_env = Rails.env
 end
 
 configatron.apn.set_default(:passphrase, '')
