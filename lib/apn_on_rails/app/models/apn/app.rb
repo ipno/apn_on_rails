@@ -8,7 +8,7 @@ class APN::App < APN::Base
   has_many :unsent_group_notifications, :through => :groups
 
   def cert
-    (RAILS_ENV == 'production' ? apn_prod_cert : apn_dev_cert)
+    (Rails.env == 'production' ? apn_prod_cert : apn_dev_cert)
   end
 
   # Opens a connection to the Apple APN server and attempts to batch deliver
