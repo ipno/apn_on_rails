@@ -1,5 +1,5 @@
 module APN
-  class DeviceGrouping < ::BasicObject
+  class DeviceGrouping < ActiveSupport::BasicObject
     def initialize(group)
       @group = group
     end
