@@ -45,7 +45,6 @@ class APN::App
             dev.unsent_notifications.each do |noty|
               conn.write(noty.message_for_sending)
               noty.sent_at = Time.now
-              debugger
               noty.save
             end
           end
