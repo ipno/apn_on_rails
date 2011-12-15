@@ -19,6 +19,7 @@ class APN::App
   # so as to not be sent again.
   #
   def send_notifications
+    debugger
     if self.cert.nil?
       raise APN::Errors::MissingCertificateError.new
       return
