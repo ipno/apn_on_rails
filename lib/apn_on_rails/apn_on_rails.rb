@@ -4,7 +4,7 @@ require 'configatron'
 
 rails_root = File.join(FileUtils.pwd, 'rails_root')
 if defined?(Rails.root)
-  rails_root = Rails.root
+  rails_root = Rails.root.to_s
 end
 
 rails_env = 'development'
