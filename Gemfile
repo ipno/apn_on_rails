@@ -18,4 +18,5 @@ group :development do
   gem "jeweler", "~> 1.5.0"
   gem "rcov", ">= 0"
   gem "actionpack", '~> 3.0.6'
+  gem 'ruby-debug'
 end
