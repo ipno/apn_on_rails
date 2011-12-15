@@ -40,8 +40,8 @@ class APN::App
   def self.send_notifications_for_cert(the_cert, app_id)
     # unless self.unsent_notifications.nil? || self.unsent_notifications.empty?
       begin
-        debugger
         APN::Connection.open_for_delivery({:cert => the_cert}) do |conn, sock|
+          debugger
           APN::Device.find_each(:app_id => app_id) do |dev|
             dev.unsent_notifications.each do |noty|
               conn.write(noty.message_for_sending)
