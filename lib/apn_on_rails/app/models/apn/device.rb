@@ -14,6 +14,7 @@ class APN::Device
   key :last_registered_at, Time
   key :token, String, :required => true, :index => true
   key :app_id, BSON::ObjectId
+  key :lang, String
   
   belongs_to :app, :class_name => 'APN::App'
   many :notifications, :class_name => 'APN::Notification'
