@@ -2,6 +2,7 @@ class APN::App
   include MongoMapper::Document
   key :apn_dev_cert, String
   key :apn_prod_cert, String
+  key :name, String
   timestamps!
   
   many :groups, :class_name => 'APN::Group', :dependent => :destroy
@@ -122,8 +123,8 @@ class APN::App
       app.process_devices
     end
     if !configatron.apn.cert.blank?
-      global_cert = File.read(configatron.apn.cert)
-      APN::App.process_devices_for_cert(global_cert)
+        #global_cert = File.read(configatron.apn.cert)
+        #APN::App.process_devices_for_cert(configatron.apn.cert)
     end
   end
 
