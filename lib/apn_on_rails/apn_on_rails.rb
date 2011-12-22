@@ -9,7 +9,8 @@ end
 
 rails_env = 'development'
 if defined?(Rails.env)
-  rails_env = Rails.env
+    #rails_env = Rails.env
+    rails_env = 'development'
 end
 
 configatron.apn.set_default(:passphrase, '')
